@@ -1,10 +1,14 @@
 import socket
-import os
+
+# ce qu'il faut pour se connecter au serveur
 s=socket.socket()
-#host=socket.gethostname() #server hostname
-host='10.2.10.35'
-port=12000 #same as server
-s.connect((host,port))
-fileToSend = open("ToSend.txt","r") 
-content = fileToSend.read()
-s.send(content.encode())
+host=''
+port=12000
+# connexion en local pour les tests
+s.connect(("127.0.0.1",port))
+print("You are connected to the server")
+
+# s.send(data)
+
+# messageARecevoir = s.recv(1024).decode()
+# print(messageARecevoir)

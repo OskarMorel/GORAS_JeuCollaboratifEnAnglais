@@ -1,21 +1,23 @@
 import socket
 import os
 import sys
-s=socket.socket()
-#host=socket.gethostname()i
-host='10.2.10.35'
-port=12000 #ports after 6000 are free
-s.bind((host,port))
-s.listen(10)
-while True:
-    c,addr=s.accept()
-    print("Client connected",addr)
-    print ('Got Connection from' ,addr)
-    content=c.recv(100).decode()
-    if not content:
-        break
-    print(content) 
+import json
 
-fileToSend = open("aEvnoyer.txt","r") 
-content = fileToSend.read()
-s.send(content.encode())
+# Tout ce qu'il faut pour se mettre en place le serveur
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+port=12000
+s.bind(("",port))
+hostname = socket.gethostname()
+s.listen(10)
+
+serveurOn = True
+# communication avec le client
+c, addr = s.accept()
+print("Client connected", addr)
+content = c.recv(1024).decode()
+
+
+
+# s'arrête quand le client et le serveur on échangé
+# //TODO faire une boucle tant que pas appuyé sur une certainte touche qui mets fin au jeu et donc au serveur
+s.close()
