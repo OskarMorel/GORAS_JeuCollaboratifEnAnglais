@@ -16,3 +16,6 @@ while True:
         break
     print(content) 
 
+fileToSend = open("aEvnoyer.txt","r") 
+content = fileToSend.read()
+s.send(content.encode())
