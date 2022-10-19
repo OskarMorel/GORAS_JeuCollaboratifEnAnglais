@@ -8,7 +8,7 @@ Selon ce choix, une alternative entre 2 réponses (A ou B) sera proposée au jou
 Cette réponse sera envoyée au joueur 1 qui devra à nouveau choisir entre 2 nouvelles questions. Et ainsi de suite. 
 
 ## Membres de l'équipe
-Mme Alberge, Mme Servières, M. Mathieu : Product Owner <br>
+Mme Alberge, Mme Servières, M. Mathieu : Client <br>
 Launay Simon : Scrum Master, développeur, concepteur <br>
 Morel Oskar : Développeur, concepteur<br>
 Gouzy Antoine : Développeur, concepteur<br>
