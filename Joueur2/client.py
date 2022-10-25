@@ -1,14 +1,29 @@
 import socket
+import json
 
-# ce qu'il faut pour se connecter au serveur
-s=socket.socket()
-host=''
-port=12000
-# connexion en local pour les tests
-s.connect(("127.0.0.1",port))
-print("You are connected to the server")
+with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as mon_fichier:
+    data = json.load(mon_fichier)
 
-# s.send(data)
+try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print('Description socket : ',s)
+except OSError:
+    print('Création socket échouée')
+else:
+    print('Création socket réussie')
+    coord_S = ('127.0.0.1', 65432)
 
-# messageARecevoir = s.recv(1024).decode()
-# print(messageARecevoir)
+
+s.connect(coord_S)
+print("Connection effectuée") 
+
+question = data["1"]["question"] + "\n**********************************************************"
+s.send(question.encode()) 
+
+
+try:
+    s.close()
+except OSError:
+    print('Socket encore ouverte !')
+else:
+    print('Socket correctement fermée')

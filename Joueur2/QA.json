@@ -1,0 +1,22 @@
+{
+    "1" : {
+        "question" : "How did you get hacked?",
+        "reponse1": {
+            "reponse" : "They used a ransomware that blocked my data, they demand 3 000 000 dollars.",
+            "cleNextQuestion" : "2"
+        },
+        "reponse2": {
+            "reponse" : "They broke into our systems and deleted all our data.",
+            "cleNextQuestion" : "3"
+        }
+    },
+    "2" : {
+        "question" : "",
+        "reponses": {
+            "reponse1" : "",
+            "reponse2" : ""
+        }
+    }
+
+
+}

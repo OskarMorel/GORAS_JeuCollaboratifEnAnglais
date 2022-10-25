@@ -1,23 +1,43 @@
 import socket
-import os
-import sys
 import json
 
-# Tout ce qu'il faut pour se mettre en place le serveur
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-port=12000
-s.bind(("",port))
-hostname = socket.gethostname()
-s.listen(10)
+with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as mon_fichier:
+    data = json.load(mon_fichier)
 
-serveurOn = True
-# communication avec le client
-c, addr = s.accept()
-print("Client connected", addr)
-content = c.recv(1024).decode()
+# with ... as ... pas utilisable ici car socket automatiquement fermée dès la sortie du bloc !
+try:
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print('Description socket : ',s)
+except OSError:
+    print('Création socket échouée')
+else:
+    print('Création socket réussie')
+    coord_S = ('127.0.0.1', 65432)
+    try:
+        s.bind(coord_S)
+        s.listen(1)
+    except OSError:
+        print('bind() échoué')
+        s.close()
+        
+    else:
+        print('bind() réussi')
+        
+
+(s_comm, coord_C) = s.accept()
+print("Client connecté\n")
+
+question = s_comm.recv(1024)
+print(question.decode() + "\n")
+print(data["1"]["reponses"]["reponse1"] + "\n")
+print(data["1"]["reponses"]["reponse2"] + "\n")
 
 
+try:
+    s_comm.close()
+    s.close()
+except OSError:
+    print('Socket encore ouverte !')
+else:
+    print('Socket correctement fermée')
 
-# s'arrête quand le client et le serveur on échangé
-# //TODO faire une boucle tant que pas appuyé sur une certainte touche qui mets fin au jeu et donc au serveur
-s.close()
