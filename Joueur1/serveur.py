@@ -1,13 +1,12 @@
 import socket
 import json
 
-with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as mon_fichier:
-    data = json.load(mon_fichier)
+with open('D:\Code\GORAS_JeuCollaboratifEnAnglais\Joueur2\QA.json') as QA:
+    data = json.load(QA)
 
-# with ... as ... pas utilisable ici car socket automatiquement fermée dès la sortie du bloc !
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print('Description socket : ',s)
+    print('Description socket : ', s)
 except OSError:
     print('Création socket échouée')
 else:
@@ -19,19 +18,30 @@ else:
     except OSError:
         print('bind() échoué')
         s.close()
-        
+
     else:
         print('bind() réussi')
-        
 
 (s_comm, coord_C) = s.accept()
 print("Client connecté\n")
 
 question = s_comm.recv(1024)
-print(question.decode() + "\n")
-print(data["1"]["reponses"]["reponse1"] + "\n")
-print(data["1"]["reponses"]["reponse2"] + "\n")
+print("1ère question reçue : " + question.decode())
+print("\n***************************************")
 
+ok = False
+while ok == False:
+    print("1 : " + data["1"]["reponse1"]["reponse"])
+    print("2 : " + data["1"]["reponse2"]["reponse"])
+    answer = input("Choose between 1 and 2 : ")
+    if answer == "1":
+        ok = True
+    elif answer == "2":
+        ok = True
+    else:
+        ok = False
+
+s_comm.send(answer.encode())
 
 try:
     s_comm.close()
@@ -40,4 +50,3 @@ except OSError:
     print('Socket encore ouverte !')
 else:
     print('Socket correctement fermée')
-

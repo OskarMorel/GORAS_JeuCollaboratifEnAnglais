@@ -1,12 +1,12 @@
 import socket
 import json
 
-with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as mon_fichier:
+with open('D:\Code\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as mon_fichier:
     data = json.load(mon_fichier)
 
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print('Description socket : ',s)
+    print('Description socket : ', s)
 except OSError:
     print('Création socket échouée')
 else:
@@ -15,10 +15,18 @@ else:
 
 
 s.connect(coord_S)
-print("Connection effectuée") 
+print("Connection effectuée")
+
 
 question = data["1"]["question"] + "\n**********************************************************"
-s.send(question.encode()) 
+print("1ère question envoyée : " + question)
+s.send(question.encode())
+
+question = s.recv(1024)
+if question == 2:
+    print("The answer is : " + data["1"]["reponse1"]["reponse"])
+else:
+    print("The answer is : " + data["1"]["reponse2"]["reponse"])
 
 
 try:
