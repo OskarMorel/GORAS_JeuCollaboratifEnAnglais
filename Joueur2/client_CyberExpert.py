@@ -1,7 +1,7 @@
 import socket
 import json
 
-with open('D:\Code\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as mon_fichier:
+with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur2\QA.json') as mon_fichier:
     data = json.load(mon_fichier)
 
 try:

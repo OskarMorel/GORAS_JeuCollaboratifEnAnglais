@@ -1,7 +1,7 @@
 import socket
 import json
 
-with open('D:\Code\GORAS_JeuCollaboratifEnAnglais\Joueur2\QA.json') as QA:
+with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as QA:
     data = json.load(QA)
 
 try:
@@ -18,15 +18,14 @@ else:
     except OSError:
         print('bind() échoué')
         s.close()
-
     else:
         print('bind() réussi')
 
 (s_comm, coord_C) = s.accept()
-print("Client connecté\n")
+print("The Cybersecurity expert is ready talk with you !!\n")
 
 question = s_comm.recv(1024)
-print("1ère question reçue : " + question.decode())
+print("Question : " + question.decode())
 print("\n***************************************")
 
 ok = False

@@ -3,20 +3,257 @@
         "question" : "How did you get hacked?",
         "reponse1": {
             "reponse" : "They used a ransomware that blocked my data, they demand 3 000 000 dollars.",
-            "cleNextQuestion" : "2"
+            "cleNext" : "2"
         },
         "reponse2": {
             "reponse" : "They broke into our systems and deleted all our data.",
-            "cleNextQuestion" : "3"
+            "cleNext" : "3"
         }
     },
     "2" : {
-        "question" : "",
-        "reponses": {
-            "reponse1" : "",
-            "reponse2" : ""
+        "question1": {   
+            "question" : "Do you want us to try to recover your data knowing that we are not sure we will be able to recover it?",
+            "cleNext" : "4"
+        },
+        "question2": {   
+            "question" : "Do you intend to pay?",
+            "cleNext" : "5"
+        }
+    },
+    "3" : {
+        "question1": {   
+            "question" : "Are your servers with an external host?",
+            "cleNext" : "6"
+        },
+        "question2": {   
+            "question" : "Do you have older backups of your servers?",
+            "cleNext" : "7"
+        }
+    },
+    "4" : {
+        "reponse1": {   
+            "reponse" : "Yes, I would like you to try",
+            "cleNext" : "8"
+        },
+        "reponse2": {   
+            "reponse" : "No, it won't be necessary",
+            "cleNext" : "9"
+        }
+    },
+    "5" : {
+        "reponse1": {   
+            "reponse" : "Yes I didn't know what to do",
+            "cleNext" : "10"
+        },
+        "reponse2": {   
+            "reponse" : "No, I preferred to call on your services",
+            "cleNext" : "11"
+        }
+    },
+    "6" : {
+        "reponse1": {   
+            "reponse" : "Yes",
+            "cleNext" : "12"
+        },
+        "reponse2": {   
+            "reponse" : "No",
+            "cleNext" : "13"
+        }
+    },
+    "7" : {
+        "reponse1": {   
+            "reponse" : "Yes, we have several backups intact",
+            "cleNext" : "14"
+        },
+        "reponse2": {   
+            "reponse" : "No, no backups are kept",
+            "cleNext" : "15"
+        }
+    },
+    "8" : {
+        "question1": {   
+            "question" : "ok, we'll take care of it",
+            "cleNext" : "0"
+        }
+
+    },
+    "9" : {
+        "question1": {   
+            "question" : "What should we do then?",
+            "cleNext" : "16"
+        },
+        "question2": {   
+            "question" : "There is nothing more I can do for you. Do you want me to come and do some prevention to prevent this from happening again ?",
+            "cleNext" : "17"
+        }
+    },
+    "10" : {
+        "question1": {   
+            "question" : "Why are you calling me then? What should I do?",
+            "cleNext" : "18"
+        },
+        "question2": {   
+            "question" : "There is nothing more I can do for you. Do you want me to come and do some prevention to prevent this from happening again ?",
+            "cleNext" : "17"
+        }
+    },
+    "11" : {
+        "question1": {   
+            "question" : "I can try to kill the malware so you won't have any more problems, if you want?",
+            "cleNext" : "19"
+        }
+    },
+    "12" : {
+        "question1": {   
+            "question" : "You can ask your server host to retrieve older data. Would you like me to do this for you?",
+            "cleNext" : "20"
+        },
+        "question2": {   
+            "question" : "Was it only your company that was attacked or your hosting company?",
+            "cleNext" : "21"
+        }
+    },
+    "13" : {
+        "question1": {   
+            "question" : "Sorry we can't do anything",
+            "cleNext" : "0"
+        }
+    },
+    "14" : {
+        "question1": {   
+            "question" : "When do you want me to come and load the data?",
+            "cleNext" : "22"
+        },
+        "question2": {   
+            "question" : "Okay, can I come tomorrow to load the older data for you?",
+            "cleNext" : "23"
+        }
+    },
+    "15" : {
+        "question1": {   
+            "question" : "There is nothing more I can do for you. Do you want me to come and do some prevention to prevent this from happening again ?",
+            "cleNext" : "24"
+        },
+        "question2": {   
+            "question" : "It will be difficult to recover your data. Do you want us to try to recover as much of your data as possible and remove the malware ?",
+            "cleNext" : "25"
+        }
+    },
+    "16" : {
+        "reponse1": {   
+            "reponse" : "I would like you to come to my company to do prevention if you want to.",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "Nothing, I don't know why I called you, I was probably lonely.",
+            "cleNext" : "0"
+        }
+    },
+    "17" : {
+        "reponse1": {   
+            "reponse" : "No thanks, we'll take care of ourselves. We'll just be more careful next time.",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "Yes, this could be a good idea. I will send you a date as soon as possible.",
+            "cleNext" : "0"
+        }
+    },
+    "18" : {
+        "reponse1": {   
+            "reponse" : "I would like you to come and do some prevention so that my employees stop doing stupid things with computers.",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "I would like you to suggest a solution to prevent this from happening again.",
+            "cleNext" : "0"
+        }
+    },
+    "19" : {
+        "reponse1": {   
+            "reponse" : "No, I would like you to come and do prevention in my company so that this does not happen again.",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "Yes, that would be great",
+            "cleNext" : "0"
+        }
+    },
+    "20" : {
+        "reponse1": {   
+            "reponse" : "Yes, that would be nice of you",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "No I can do it myself I'll call them right away. Thank you very much for your help, goodbye.",
+            "cleNext" : "0"
+        }
+    },
+    "21" : {
+        "reponse1": {   
+            "reponse" : "No, it's just my company.",
+            "cleNext" : "26"
+        },
+        "reponse2": {   
+            "reponse" : "I think it was my host that was attacked.",
+            "cleNext" : "27"
+        }
+    },
+    "22" : {
+        "reponse1": {   
+            "reponse" : "You can come tomorrow if you can",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "I will call you back tomorrow, I think. Thank you very much.",
+            "cleNext" : "0"
+        }
+    },
+    "23" : {
+        "reponse1": {   
+            "reponse" : "Yes, you can.",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "No tomorrow I'm too busy",
+            "cleNext" : "0"
+        }
+    },
+    "24" : {
+        "reponse1": {   
+            "reponse" : "No thanks, we'll take care of ourselves. We'll just be more careful next time.",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "Yes, this could be a good idea. I will send you a date as soon as possible.",
+            "cleNext" : "0"
+        }
+    },
+    "25" : {
+        "reponse1": {   
+            "reponse" : "No thanks, we'll take care of ourselves.",
+            "cleNext" : "0"
+        },
+        "reponse2": {   
+            "reponse" : "Yes, it would be perfect if you could do it",
+            "cleNext" : "0"
+        }
+    },
+    "26" : {
+        "question1": {   
+            "question" : "Perfect, I can recover an old backup of your data, directly to your remote server. You won't get all your data back but most of it.",
+            "cleNext" : "0"
+        }
+    },
+    "27" : {
+        "question1": {   
+            "question" : "That means I can't do much. Your data is not in your company. We can only hope that your remote server has an older backup so that we can return the data to you uncorrupted.",
+            "cleNext" : "0"
         }
     }
+    
+
+
 
 
 }
