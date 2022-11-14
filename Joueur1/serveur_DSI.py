@@ -2,11 +2,8 @@ import socket
 import json
 
 # Ouverture du fichier JSON qui contient les questions / réponses
-<<<<<<< HEAD
-with open('Z:\sae\jeuCollabTest\Joueur1\QA.json') as QA:
-=======
 with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as QA:
->>>>>>> db69712edc2fe0ebcc7a51b5514eb223db207feb
+
     data = json.load(QA)
 
 # Création de la socket du serveur
@@ -32,17 +29,19 @@ else:
 (s_comm, coord_C) = s.accept()
 print("Connection etablie\n")
 
-<<<<<<< HEAD
 ok = True
 premier = False
 choixAFaire = True
 
+# Explication du contexte
+print("You are a CIO, your company has been hacked. That's why you called a cybersecurity expert.\nYou will have to answer his questions so that he can help you.\nGood luck.\n")
+
 while ok :
+    question2 = True
     receptionClient = s_comm.recv(1024).decode()
     print("reception du client : ", receptionClient)
 
     if receptionClient != "0":
-
         if premier:
             if data[cleAEnvoyer]["question1"]["cleNext"] == receptionClient:
                 print(data[cleAEnvoyer]["question1"]["question"])
@@ -57,89 +56,32 @@ while ok :
             print("2) " + data[receptionClient]["reponse2"]["reponse"])
         except:
             print("")
-        
-        
+            question2 = False
+
         choix = input("Choose between 1 and 2 : ")
         if choix == "1":
             cleAEnvoyer = data[receptionClient]["reponse1"]["cleNext"]
-        elif choix == "2":
+        elif choix == "2" and question2 == True:
             cleAEnvoyer = data[receptionClient]["reponse2"]["cleNext"]
         else:
-            while(choix != "1" and choix !="2"):
+            while(choix != "1" and choix !="2" or question2 == False):
                     choix = input("Choose between 1 and 2 : ")       
                     if choix == "1":
                         cleAEnvoyer = data[receptionClient]["reponse1"]["cleNext"]
-                    elif choix == "2":
+                        question2 = True
+                    elif choix == "2" and question2 == True:
                         cleAEnvoyer = data[receptionClient]["reponse2"]["cleNext"]
 
-
-        print("")
-        print("clé a envoyer au serveur", cleAEnvoyer)
-        print("")
         premier = True
         # Arret de la boucle si arriver a la fin de l'arbre
         if cleAEnvoyer == "0":
-            print("")
-            print("Vous etes arriver à la fin du jeux")
-            print("")
+            print("\nThis is the end of the game\n")
             ok = False
         s_comm.send(cleAEnvoyer.encode())
-=======
-# Réception de la première question envoyée par le client (l'expert en cybersécurité)
-question = s_comm.recv(1024)
-print("Question : " + question.decode())
-print("\n***************************************")
 
-# Choix de la réponse à envoyer au client (l'expert en cybersécurité)
-ok = False
-while ok == False:
-    print("1 : " + data["1"]["reponse1"]["reponse"])
-    print("2 : " + data["1"]["reponse2"]["reponse"])
-    answer = input("Choose between 1 and 2 : ")
-    if answer == "1":
-        ok = True
-        cleSuivante = data["1"]["reponse1"]["cleNext"]
-    elif answer == "2":
-        ok = True
-        cleSuivante = data["1"]["reponse2"]["cleNext"]
->>>>>>> db69712edc2fe0ebcc7a51b5514eb223db207feb
     else:
-        print("")
-        print("Vous etes arriver à la fin du jeux")
-        print("")
+        print("\nThis is the end of the game\n")
         ok = False
-
-<<<<<<< HEAD
-
-
-=======
-# Envoi de la réponse choisie
-print(answer)
-s_comm.send(answer.encode())
-
-#TODO Faire la boucle pour les réponses
-finJeu = False
-choixValide = False
-while finJeu == False:
-    cleQuestion = s_comm.recv(1024)
-    print(cleQuestion.decode())
-    print("Question : " + question.decode())
-    print("\n***************************************")
-    
-    while choixValide == False:
-        print("1 : " + data[str(cleQuestion)]["reponse1"]["reponse"])
-        print("2 : " + data[str(cleQuestion)]["reponse2"]["reponse"])
-        answer = input("Choose between 1 and 2 : ")
-        if answer == "1":
-            choixValide = True
-            cleSuivante = data[cleSuivante]["reponse1"]["cleNext"]
-        elif answer == "2":
-            choixValide = True
-            cleSuivante = data[cleSuivante]["reponse2"]["cleNext"]
-        else:
-            choixValide = False
-    s_comm.send(answer.encode())
->>>>>>> db69712edc2fe0ebcc7a51b5514eb223db207feb
 
 # Fermeture de la socket
 try:
