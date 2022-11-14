@@ -1,8 +1,13 @@
 import socket
 import json
 
+import os
+
+# Récupération du chemin courant pour accéder au fichier des questions / réponses
+path = os.getcwd()
+
 # Ouverture du fichier JSON qui contient les questions / réponses
-with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur2\QA.json') as mon_fichier:
+with open(path + '\QA.json') as mon_fichier:
     data = json.load(mon_fichier)
 
 # Création de la socket du client
@@ -61,11 +66,13 @@ while ok :
 
         choix = input("Choose between 1 and 2 : ")
  
+        # Choix de la question à envoyer
         if choix == "1":
             cleAEnvoyerAuServeur = data[reponseServeur]["question1"]["cleNext"]
         elif choix == "2" and question2 == True:
             cleAEnvoyerAuServeur = data[reponseServeur]["question2"]["cleNext"]
         else:
+            # Boucle qui gère l'erreur (si il appuye sur autre que que 1 ou 2 redemande)
             while(choix != "1" and choix !="2" or question2 == False):
                 choix = input("Choose between 1 and 2 : ")       
                 if choix == "1":

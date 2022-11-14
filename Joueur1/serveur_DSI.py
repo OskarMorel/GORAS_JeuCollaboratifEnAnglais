@@ -1,8 +1,12 @@
 import socket
 import json
+import os
+
+# Récupération du chemin courant pour accéder au fichier des questions / réponses
+path = os.getcwd()
 
 # Ouverture du fichier JSON qui contient les questions / réponses
-with open('Z:\GORAS_JeuCollaboratifEnAnglais\Joueur1\QA.json') as QA:
+with open(path + '\QA.json') as QA:
 
     data = json.load(QA)
 
