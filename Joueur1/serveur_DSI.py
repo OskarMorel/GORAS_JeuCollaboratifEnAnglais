@@ -1,6 +1,15 @@
 import socket
 import json
-import os
+import os           
+
+print("╔═══╗╔╗                       ╔╗ ")
+print("║╔═╗║║║                      ╔╝║ ")
+print("║╚═╝║║║ ╔══╗ ╔╗ ╔╗╔══╗╔═╗    ╚╗║ ")
+print("║╔══╝║║ ╚ ╗║ ║║ ║║║╔╗║║╔╝     ║║ ")
+print("║║   ║╚╗║╚╝╚╗║╚═╝║║║═╣║║     ╔╝╚╗")
+print("╚╝   ╚═╝╚═══╝╚═╗╔╝╚══╝╚╝     ╚══╝")
+print("             ╔═╝║")
+print("             ╚══╝  ")
 
 # Récupération du chemin courant pour accéder au fichier des questions / réponses
 path = os.getcwd()
@@ -9,6 +18,8 @@ path = os.getcwd()
 with open(path + '\QA.json') as QA:
 
     data = json.load(QA)
+ipServeur = socket.gethostbyname(socket.gethostname())
+print("Server's IP : " + ipServeur)
 
 # Création de la socket du serveur
 def creationSocket():
@@ -18,7 +29,7 @@ def creationSocket():
         print('Socket creation failed')
     else:
         print('Socket creation success')
-        coord_S = ('127.0.0.1', 65432)
+        coord_S = (ipServeur, 65432)
         # Association des coordonnées à la socket créée 
         try:
             s.bind(coord_S)
@@ -35,8 +46,7 @@ def accepter(s):
     (s_comm, coord_C) = s.accept()
     print("connection established\n")
     return(s_comm)
-
-
+    
 
 def programmePrincipal(s, s_comm):
     ok = True
@@ -96,9 +106,9 @@ def fermetureSocket(s, s_comm):
         s_comm.close()
         s.close()
     except OSError:
-        print('Socket encore ouverte !')
+        print('Socket is open !')
     else:
-        print('Socket correctement fermée')
+        print('Socket closed')
 
 s = creationSocket()
 s_comm = accepter(s)

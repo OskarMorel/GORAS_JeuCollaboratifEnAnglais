@@ -3,12 +3,23 @@ import json
 
 import os
 
+print("╔═══╗╔╗                      ╔═══╗")
+print("║╔═╗║║║                      ║╔═╗║")
+print("║╚═╝║║║ ╔══╗ ╔╗ ╔╗╔══╗╔═╗    ╚╝╔╝║")
+print("║╔══╝║║ ╚ ╗║ ║║ ║║║╔╗║║╔╝    ╔═╝╔╝")
+print("║║   ║╚╗║╚╝╚╗║╚═╝║║║═╣║║     ║║╚═╗")
+print("╚╝   ╚═╝╚═══╝╚═╗╔╝╚══╝╚╝     ╚═══╝")
+print("             ╔═╝║")
+print("             ╚══╝")
+
 # Récupération du chemin courant pour accéder au fichier des questions / réponses
 path = os.getcwd()
 
 # Ouverture du fichier JSON qui contient les questions / réponses
 with open(path + '\QA.json') as mon_fichier:
     data = json.load(mon_fichier)
+
+ipServeur = input("Please, write the server's IP : ")
 
 # Création de la socket du client
 def creationSocket():
@@ -18,7 +29,7 @@ def creationSocket():
         print('Socket creation failed')
     else:
         print('Socket creation success')
-        coord_S = ('127.0.0.1', 65432)
+        coord_S = (ipServeur, 65432)
     return(s, coord_S)
 
 # Connection au serveur (Le DSI)
@@ -92,9 +103,9 @@ def fermetureSocket(s):
     try:
         s.close()
     except OSError:
-        print('Socket encore ouverte !')
+        print('Socket open!')
     else:
-        print('Socket correctement fermée')
+        print('Socket closed')
 
 s, coord_S = creationSocket()
 accepter(s, coord_S)
