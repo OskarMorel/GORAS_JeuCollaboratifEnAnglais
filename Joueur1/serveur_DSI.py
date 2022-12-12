@@ -2,6 +2,11 @@ import socket
 import json
 import os           
 
+# TODO ***********************
+# Noms plus explicite 
+# constante pour le programme principal "question 1" "question 2"
+# Fonctions moins longues
+
 print("╔═══╗╔╗                       ╔╗ ")
 print("║╔═╗║║║                      ╔╝║ ")
 print("║╚═╝║║║ ╔══╗ ╔╗ ╔╗╔══╗╔═╗    ╚╗║ ")
@@ -16,7 +21,6 @@ path = os.getcwd()
 
 # Ouverture du fichier JSON qui contient les questions / réponses
 with open(path + '\QA.json') as QA:
-
     data = json.load(QA)
 ipServeur = socket.gethostbyname(socket.gethostname())
 print("Server's IP : " + ipServeur)
@@ -29,10 +33,10 @@ def creationSocket():
         print('Socket creation failed')
     else:
         print('Socket creation success')
-        coord_S = (ipServeur, 65432)
+        coordServeur = (ipServeur, 65432)
         # Association des coordonnées à la socket créée 
         try:
-            s.bind(coord_S)
+            s.bind(coordServeur)
             s.listen(1)
         except OSError:
             print('bind() fail')
