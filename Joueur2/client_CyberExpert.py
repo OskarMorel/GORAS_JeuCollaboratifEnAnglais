@@ -1,6 +1,20 @@
+# +----------------------------------------------------------------------------------------------------------------------+
+# | Author : Morel Oskar                                                                                                 |
+# |          Gouzy Antoine                                                                                               |
+# |          Jauzion Rémi                                                                                                |
+# |          Gautier Jalbaud                                                                                             |
+# |          Lanay Simon                                                                                                 |
+# +----------------------------------------------------------------------------------------------------------------------+
+# | CyberExpert / client :                                                                                               |
+# | - Envoie des question au DSI (Joueur1 / serveur)                                                                     |
+# | - Utilisation des sockets en TCP.                                                                                    |
+# | - Coupage du code en plusieurs fonctions.                                                                            |
+# | - Gestion des erreurs avec des try / except                                                                          |
+# | - Le client (ce programme) doit entrer l'IP du serveur pour s'y connecter (le serveur affiche son IP dans la console |
+# +----------------------------------------------------------------------------------------------------------------------+
+
 import socket
 import json
-
 import os
 
 print("╔═══╗╔╗                      ╔═══╗")
@@ -12,6 +26,15 @@ print("╚╝   ╚═╝╚═══╝╚═╗╔╝╚══╝╚╝     �
 print("             ╔═╝║")
 print("             ╚══╝")
 
+# Utilisés dans les échanges avec le client
+QUESTION_1 = "question1"
+QUESTION_2 = "question2"
+QUESTION = "question"
+CLE_NEXT = "cleNext"
+REPONSE_1 = "reponse1"
+REPONSE_2 = "reponse2"
+REPONSE = "reponse"
+
 # Récupération du chemin courant pour accéder au fichier des questions / réponses
 path = os.getcwd()
 
@@ -19,30 +42,34 @@ path = os.getcwd()
 with open(path + '\QA.json') as mon_fichier:
     data = json.load(mon_fichier)
 
-ipServeur = input("Please, write the server's IP : ")
+
+
+    
+
 
 # Création de la socket du client
 def creationSocket():
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socketClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     except OSError:
         print('Socket creation failed')
     else:
         print('Socket creation success')
-        coord_S = (ipServeur, 65432)
-    return(s, coord_S)
+        coordonneesServeur = (ipServeur, 65432)
+    return(socketClient, coordonneesServeur)
 
 # Connection au serveur (Le DSI)
-def accepter(s, coord_S):
-    s.connect(coord_S)
+def accepter(socketClient, coordonneesServeur):
+    print ("Waiting for connection\n")
+    socketClient.connect(coordonneesServeur)
     print("connection established")
 
 cleDepart = "1"
 
-def programmePrincipal(s):
+def programmePrincipal(socketClient):
     # Envoi de la première question au serveur (DSI)
     cleAEnvoyerAuServeur = cleDepart
-    s.send(cleAEnvoyerAuServeur.encode())
+    socketClient.send(cleAEnvoyerAuServeur.encode())
 
     ok = True
     choixAFaire = True
@@ -51,27 +78,27 @@ def programmePrincipal(s):
     print("\nYou are a cybersecurity expert, a new client calls you because his company has been hacked.\nThrough different questions you will have to understand how he got hacked and how you can help him.\nGood luck to you\n")
     while ok :
         question2 = True
-        reponseServeur = s.recv(1024).decode()
+        reponseServeur = socketClient.recv(1024).decode()
         # Arret de la boucle si arriver a la fin de l'arbre sinon continue à communiquer
         if reponseServeur == "0":
             # Afficher la reponse envoyer par le serveur
-            if data[cleAEnvoyerAuServeur]["reponse1"]["cleNext"] == reponseServeur:
-                print(data[cleAEnvoyerAuServeur]["reponse1"]["reponse"])
+            if data[cleAEnvoyerAuServeur][REPONSE_1][CLE_NEXT] == reponseServeur:
+                print(data[cleAEnvoyerAuServeur][REPONSE_1][REPONSE])
             else:
-                print(data[cleAEnvoyerAuServeur]["reponse2"]["reponse"])
+                print(data[cleAEnvoyerAuServeur][REPONSE_2][REPONSE])
             print("\nThis is the end of the game\n")
             ok = False
         elif(cleAEnvoyerAuServeur != "0"):
             print("\nquestion :")
             # Afficher la reponse envoyer par le serveur
-            if data[cleAEnvoyerAuServeur]["reponse1"]["cleNext"] == reponseServeur:
-                print(data[cleAEnvoyerAuServeur]["reponse1"]["reponse"])
+            if data[cleAEnvoyerAuServeur][REPONSE_1][CLE_NEXT] == reponseServeur:
+                print(data[cleAEnvoyerAuServeur][REPONSE_1][REPONSE])
             else:
-                print(data[cleAEnvoyerAuServeur]["reponse2"]["reponse"])
+                print(data[cleAEnvoyerAuServeur][REPONSE_2][REPONSE])
 
-            print("\n1)", data[reponseServeur]["question1"]["question"])
+            print("\n1)", data[reponseServeur][QUESTION_1][QUESTION])
             try:
-                print("2)", data[reponseServeur]["question2"]["question"] + "\n")
+                print("2)", data[reponseServeur][QUESTION_2][QUESTION] + "\n")
             except:
                 print("")
                 question2 = False
@@ -80,34 +107,41 @@ def programmePrincipal(s):
     
             # Choix de la question à envoyer
             if choix == "1":
-                cleAEnvoyerAuServeur = data[reponseServeur]["question1"]["cleNext"]
+                cleAEnvoyerAuServeur = data[reponseServeur][QUESTION_1][CLE_NEXT]
             elif choix == "2" and question2 == True:
-                cleAEnvoyerAuServeur = data[reponseServeur]["question2"]["cleNext"]
+                cleAEnvoyerAuServeur = data[reponseServeur][QUESTION_2][CLE_NEXT]
             else:
                 # Boucle qui gère l'erreur (si il appuye sur autre que que 1 ou 2 redemande)
                 while(choix != "1" and choix !="2" or question2 == False):
                     choix = input("Choose between 1 and 2 : ")       
                     if choix == "1":
-                        cleAEnvoyerAuServeur = data[reponseServeur]["question1"]["cleNext"]
+                        cleAEnvoyerAuServeur = data[reponseServeur][QUESTION_1][CLE_NEXT]
                         question2 = True
                     elif choix == "2" and question2 == True:
-                        cleAEnvoyerAuServeur = data[reponseServeur]["question2"]["cleNext"]
+                        cleAEnvoyerAuServeur = data[reponseServeur][QUESTION_2][CLE_NEXT]
 
-            s.send(cleAEnvoyerAuServeur.encode())
+            socketClient.send(cleAEnvoyerAuServeur.encode())
         else:
             print("\nThis is the end of the game\n")
             ok = False
 
 # Fermeture de la socket  
-def fermetureSocket(s):  
+def fermetureSocket(socketClient):  
     try:
-        s.close()
+        socketClient.close()
     except OSError:
         print('Socket open!')
     else:
         print('Socket closed')
 
-s, coord_S = creationSocket()
-accepter(s, coord_S)
-programmePrincipal(s)
-fermetureSocket(s)
+while True:
+    try:
+        ipServeur = input("Please, write the server'socketClient IP : ")
+        socketClient, coordonneesServeur = creationSocket()
+        accepter(socketClient, coordonneesServeur) 
+        break
+    except socket.error:
+        print("Oops! That was no a valid IP!...Try again!")
+
+programmePrincipal(socketClient)
+fermetureSocket(socketClient)
