@@ -48,6 +48,8 @@ with open(path + '\QA.json') as mon_fichier:
 
 
 # Création de la socket du client
+# return : socketClient = la socket du client
+#          coordonneesServeur = les coordonnées du serveur (IP + port)
 def creationSocket():
     try:
         socketClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -58,14 +60,18 @@ def creationSocket():
         coordonneesServeur = (ipServeur, 65432)
     return(socketClient, coordonneesServeur)
 
-# Connection au serveur (Le DSI)
-def accepter(socketClient, coordonneesServeur):
+# Acceptation de la connexion avec le client (l'expert en cybersécurité)
+# ----- Paramètre : socketClient = la socket crée par la fonction creationSocket() -----
+#                   coordonneesServeur : les coordonnées (IP + port) du serveur afin de pouvoir se connecter à celui ci
+def connecter(socketClient, coordonneesServeur):
     print ("Waiting for connection\n")
     socketClient.connect(coordonneesServeur)
     print("connection established")
 
 cleDepart = "1"
 
+# S'occupe de la connectionActuelle avec le client (Récupération de la question + réponse à celle ci)
+# ----- Paramètres : socketServeur = la socket créée par la foncion creationSocket() -----
 def programmePrincipal(socketClient):
     # Envoi de la première question au serveur (DSI)
     cleAEnvoyerAuServeur = cleDepart
@@ -125,7 +131,8 @@ def programmePrincipal(socketClient):
             print("\nThis is the end of the game\n")
             ok = False
 
-# Fermeture de la socket  
+# Ferme la connection avec le client et ferme la socket
+# ----- Parametres : socketServeur = la socket créée par la fonction creationSocket()
 def fermetureSocket(socketClient):  
     try:
         socketClient.close()
@@ -138,7 +145,7 @@ while True:
     try:
         ipServeur = input("Please, write the server'socketClient IP : ")
         socketClient, coordonneesServeur = creationSocket()
-        accepter(socketClient, coordonneesServeur) 
+        connecter(socketClient, coordonneesServeur) 
         break
     except socket.error:
         print("Oops! That was no a valid IP!...Try again!")

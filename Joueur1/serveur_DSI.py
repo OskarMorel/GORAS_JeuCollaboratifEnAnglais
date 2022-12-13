@@ -50,6 +50,7 @@ ipServeur = socket.gethostbyname(socket.gethostname())
 print("Server'socketServeur IP : " + ipServeur)
 
 # Création de la socket du serveur
+# Return : socketServeur = la socket du serveur crée 
 def creationSocket():
     try:
         socketServeur = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -70,13 +71,17 @@ def creationSocket():
     return socketServeur
 
 # Acceptation de la connexion avec le client (l'expert en cybersécurité)
+# ----- Paramètre : socketServeur = la socket crée par la fonction creationSocket() -----
+# Return : connectionActuelle = la connection établie avec le client
 def accepter(socketServeur):
-    (communication, coordonneesClient) = socketServeur.accept()
+    (connectionActuelle, coordonneesClient) = socketServeur.accept()
     print("connection established\n")
-    return(communication)
+    return(connectionActuelle)
     
-
-def programmePrincipal(socketServeur, communication):
+# S'occupe de la connectionActuelle avec le client (Récupération de la question + réponse à celle ci)
+# ----- Paramètres : socketServeur = la socket créée par la foncion creationSocket() -----
+#                    connectionActuelle = la connection effective avec le client (permet de faire des échanges avec celui ci)
+def programmePrincipal(socketServeur, connectionActuelle):
     ok = True
     premier = False
     choixAFaire = True
@@ -84,7 +89,7 @@ def programmePrincipal(socketServeur, communication):
     print("You are a CIO, your company has been hacked. That'socketServeur why you called a cybersecurity expert.\nYou will have to answer his questions so that he can help you.\nGood luck.\n")
     while ok :
         question2 = True
-        receptionClient = communication.recv(1024).decode()
+        receptionClient = connectionActuelle.recv(1024).decode()
 
         if receptionClient != "0":
             if premier:
@@ -122,23 +127,26 @@ def programmePrincipal(socketServeur, communication):
             if cleAEnvoyer == "0":
                 print("\nThis is the end of the game\n")
                 ok = False
-            communication.send(cleAEnvoyer.encode())
+            connectionActuelle.send(cleAEnvoyer.encode())
 
         else:
             print("\nThis is the end of the game\n")
             ok = False
 
-# Fermeture de la socket
-def fermetureSocket(socketServeur, communication):
+# Ferme la connection avec le client et ferme la socket
+# ----- Parametres : socketServeur = la socket créée par la fonction creationSocket()
+#                    connectionActuelle = la connection avec le client (permet de faire les échanges)
+def fermetureSocket(socketServeur, connectionActuelle):
     try:
-        communication.close()
+        connectionActuelle.close()
         socketServeur.close()
     except OSError:
         print('Socket is open !')
     else:
         print('Socket closed')
 
+# Utilisation des fonction crées tout au long du programme
 socketServeur = creationSocket()
-communication = accepter(socketServeur)
-programmePrincipal(socketServeur, communication)
-fermetureSocket(socketServeur, communication)
+connectionActuelle = accepter(socketServeur)
+programmePrincipal(socketServeur, connectionActuelle)
+fermetureSocket(socketServeur, connectionActuelle)
