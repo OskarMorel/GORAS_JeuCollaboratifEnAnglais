@@ -16,6 +16,7 @@
 import socket
 import json
 import os
+import time
 
 print("╔═══╗╔╗                      ╔═══╗")
 print("║╔═╗║║║                      ║╔═╗║")
@@ -41,11 +42,6 @@ path = os.getcwd()
 # Ouverture du fichier JSON qui contient les questions / réponses
 with open(path + '\QA.json') as mon_fichier:
     data = json.load(mon_fichier)
-
-
-
-    
-
 
 # Création de la socket du client
 # return : socketClient = la socket du client
@@ -151,4 +147,6 @@ while True:
         print("Oops! That was no a valid IP!...Try again!")
 
 programmePrincipal(socketClient)
+print("\nThe application will close in 10 seconds")
+time.sleep(10.0)
 fermetureSocket(socketClient)

@@ -16,6 +16,7 @@
 import socket
 import json
 import os           
+import time
 
 # TODO ***********************
 # Noms plus explicite 
@@ -47,7 +48,7 @@ path = os.getcwd()
 with open(path + '\QA.json') as QA:
     data = json.load(QA)
 ipServeur = socket.gethostbyname(socket.gethostname())
-print("Server'socketServeur IP : " + ipServeur)
+print("Server's IP : " + ipServeur)
 
 # Création de la socket du serveur
 # Return : socketServeur = la socket du serveur crée 
@@ -149,4 +150,6 @@ def fermetureSocket(socketServeur, connectionActuelle):
 socketServeur = creationSocket()
 connectionActuelle = accepter(socketServeur)
 programmePrincipal(socketServeur, connectionActuelle)
+print("\nThe application will close in 10 seconds")
+time.sleep(10.0)
 fermetureSocket(socketServeur, connectionActuelle)
