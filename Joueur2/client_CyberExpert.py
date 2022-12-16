@@ -139,7 +139,7 @@ def fermetureSocket(socketClient):
 
 while True:
     try:
-        ipServeur = input("Please, write the server'socketClient IP : ")
+        ipServeur = input("Please, write the server's IP : ")
         socketClient, coordonneesServeur = creationSocket()
         connecter(socketClient, coordonneesServeur) 
         break
