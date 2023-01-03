@@ -2,8 +2,8 @@
 # | Author : Morel Oskar                                                                                                 |
 # |          Gouzy Antoine                                                                                               |
 # |          Jauzion Rémi                                                                                                |
-# |          Gautier Jalbaud                                                                                             |
-# |          Lanay Simon                                                                                                 |
+# |          Gauthier Jalbaud                                                                                             |
+# |          Launay Simon                                                                                                 |
 # +----------------------------------------------------------------------------------------------------------------------+
 # | CyberExpert / client :                                                                                               |
 # | - Envoie des question au DSI (Joueur1 / serveur)                                                                     |
@@ -56,7 +56,7 @@ def creationSocket():
         coordonneesServeur = (ipServeur, 65432)
     return(socketClient, coordonneesServeur)
 
-# Acceptation de la connexion avec le client (l'expert en cybersécurité)
+# Acceptation de la connexion avec le serveur (DSI)
 # ----- Paramètre : socketClient = la socket crée par la fonction creationSocket() -----
 #                   coordonneesServeur : les coordonnées (IP + port) du serveur afin de pouvoir se connecter à celui ci
 def connecter(socketClient, coordonneesServeur):
@@ -66,7 +66,7 @@ def connecter(socketClient, coordonneesServeur):
 
 cleDepart = "1"
 
-# S'occupe de la connectionActuelle avec le client (Récupération de la question + réponse à celle ci)
+# S'occupe de la connectionActuelle avec le serveur (Récupération de la question + réponse à celle ci)
 # ----- Paramètres : socketServeur = la socket créée par la foncion creationSocket() -----
 def programmePrincipal(socketClient):
     # Envoi de la première question au serveur (DSI)
