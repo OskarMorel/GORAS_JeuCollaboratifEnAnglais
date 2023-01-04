@@ -2,8 +2,8 @@
 # | Author : Morel Oskar                                                                                           |
 # |          Gouzy Antoine                                                                                         |
 # |          Jauzion Rémi                                                                                          |
-# |          Gautier Jalbaud                                                                                       |
-# |          Lanay Simon                                                                                           |
+# |          Gauthier Jalbaud                                                                                       |
+# |          Launay Simon                                                                                           |
 # +----------------------------------------------------------------------------------------------------------------+
 # | DSI/ serveur:                                                                                                  |
 # | - Répond aux questions du client (cyberExpert)                                                                 |
@@ -18,10 +18,6 @@ import json
 import os           
 import time
 
-# TODO ***********************
-# Noms plus explicite 
-# constante pour le programme principal "question 1" "question 2"
-# Fonctions moins longues
 
 print("╔═══╗╔╗                       ╔╗ ")
 print("║╔═╗║║║                      ╔╝║ ")
