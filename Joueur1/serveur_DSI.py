@@ -45,6 +45,7 @@ with open(path + '\QA.json') as QA:
     data = json.load(QA)
 ipServeur = socket.gethostbyname(socket.gethostname())
 print("Server's IP : " + ipServeur)
+print("-------------------------------------------\nYou must wait for the client to connect to you !")
 
 # Création de la socket du serveur
 # Return : socketServeur = la socket du serveur crée 
@@ -54,7 +55,6 @@ def creationSocket():
     except OSError:
         print('Socket creation failed')
     else:
-        print('Socket creation success')
         coordServeur = (ipServeur, 65432)
         # Association des coordonnées à la socket créée 
         try:
@@ -63,8 +63,6 @@ def creationSocket():
         except OSError:
             print('bind() fail')
             socketServeur.close()
-        else:
-            print('bind() success')
     return socketServeur
 
 # Acceptation de la connexion avec le client (l'expert en cybersécurité)
@@ -86,18 +84,24 @@ def programmePrincipal(socketServeur, connectionActuelle):
     print("You are a CIO, your company has been hacked. That'socketServeur why you called a cybersecurity expert.\nYou will have to answer his questions so that he can help you.\nGood luck.\n")
     while ok :
         question2 = True
+
+        print("\nWaiting a question form the cyber expert")
         receptionClient = connectionActuelle.recv(1024).decode()
 
         if receptionClient != "0":
             if premier:
                 if data[cleAEnvoyer][QUESTION_1][CLE_NEXT] == receptionClient:
+                    print("\nCyber Expert question : ")
                     print(data[cleAEnvoyer][QUESTION_1][QUESTION]+ "\n")
                 else:
+                    print("\nCyber Expert question : ")
                     print(data[cleAEnvoyer][QUESTION_2][QUESTION] + "\n")
             else:
-                print(data["1"][QUESTION])
+                print("\nCyber Expert question : ")
+                print(data["1"][QUESTION] + "\n")
 
             # Choix de la réponse à envoyer au client (l'expert en cybersécurité)
+            
             print("1) " + data[receptionClient][REPONSE_1][REPONSE])
             try:
                 print("2) " + data[receptionClient][REPONSE_2][REPONSE] + "\n")

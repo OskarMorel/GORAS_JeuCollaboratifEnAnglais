@@ -52,7 +52,6 @@ def creationSocket():
     except OSError:
         print('Socket creation failed')
     else:
-        print('Socket creation success')
         coordonneesServeur = (ipServeur, 65432)
     return(socketClient, coordonneesServeur)
 
@@ -60,7 +59,6 @@ def creationSocket():
 # ----- Paramètre : socketClient = la socket crée par la fonction creationSocket() -----
 #                   coordonneesServeur : les coordonnées (IP + port) du serveur afin de pouvoir se connecter à celui ci
 def connecter(socketClient, coordonneesServeur):
-    print ("Waiting for connection\n")
     socketClient.connect(coordonneesServeur)
     print("connection established")
 
@@ -79,6 +77,7 @@ def programmePrincipal(socketClient):
     # Explication du contexte du jeu
     print("\nYou are a cybersecurity expert, a new client calls you because his company has been hacked.\nThrough different questions you will have to understand how he got hacked and how you can help him.\nGood luck to you\n")
     while ok :
+        print("Waiting for a response from the CIO !\n")
         question2 = True
         reponseServeur = socketClient.recv(1024).decode()
         # Arret de la boucle si arriver a la fin de l'arbre sinon continue à communiquer
@@ -91,7 +90,7 @@ def programmePrincipal(socketClient):
             print("\nThis is the end of the game\n")
             ok = False
         elif(cleAEnvoyerAuServeur != "0"):
-            print("\nquestion :")
+            print("\nCIO's answer :")
             # Afficher la reponse envoyer par le serveur
             if data[cleAEnvoyerAuServeur][REPONSE_1][CLE_NEXT] == reponseServeur:
                 print(data[cleAEnvoyerAuServeur][REPONSE_1][REPONSE])
@@ -123,6 +122,7 @@ def programmePrincipal(socketClient):
                         cleAEnvoyerAuServeur = data[reponseServeur][QUESTION_2][CLE_NEXT]
 
             socketClient.send(cleAEnvoyerAuServeur.encode())
+            print("Waiting for a response from the CIO !\n")
         else:
             print("\nThis is the end of the game\n")
             ok = False
